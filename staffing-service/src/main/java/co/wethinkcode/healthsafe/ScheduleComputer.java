@@ -27,8 +27,9 @@ package co.wethinkcode.healthsafe;
  */
 public final class ScheduleComputer {
 
-    /** Departments that always have a heavier on-call baseline (2 doctors instead of 1). */
-    private static final java.util.Set<String> CRITICAL_DEPARTMENTS = java.util.Set.of("ICU", "Oncology");
+    /** Departments that always have a heavier on-call baseline (2 doctors instead of 1).
+     *  Stored upper-cased because lookups compare {@code department.toUpperCase()}. */
+    private static final java.util.Set<String> CRITICAL_DEPARTMENTS = java.util.Set.of("ICU", "ONCOLOGY");
 
     /**
      * Represents a specific role in the on-call roster.
@@ -113,6 +114,7 @@ public final class ScheduleComputer {
      * @return true if the department is critical, false otherwise
      */
     private static boolean isCritical(String department) {
-        return department != null && CRITICAL_DEPARTMENTS.contains(department.toUpperCase());
+        return department != null
+                && CRITICAL_DEPARTMENTS.contains(department.toUpperCase(java.util.Locale.ROOT));
     }
 }
