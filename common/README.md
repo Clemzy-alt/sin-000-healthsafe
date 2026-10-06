@@ -68,3 +68,4 @@ Both wiring steps are done:
 - `ward-service` subscribes and stores what it receives
   (`co.wethinkcode.healthsafe.mq.MqManager`), readable via
   `GET /staffing-events` — no synchronous calls back to `staffing-service`.
+<!-- mq wiring complete -->
