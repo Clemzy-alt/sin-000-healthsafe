@@ -1,0 +1,26 @@
+1. Fetch latest
+   git fetch origin
+
+2. Ensure up to date with remote
+   git rebase origin/main
+
+3. Verify ahead count (should be >= 10)
+   git rev-list --count origin/main..HEAD
+
+4. Push safely (use SSH; ensure correct key is added to GitHub for Clemzy-alt or use your account that has access)
+   git remote set-url origin git@github.com:Clemzy-alt/sin-000-healthsafe.git
+   ssh-add -l
+   git push origin main
+
+If SSH key is for a different GitHub account (moropenelebo-coder) and that account has no write access:
+- Add the SSH key tied to Clemzy-alt to ssh-agent OR
+- Switch to HTTPS with a Personal Access Token (PAT): 
+  git remote set-url origin https://<token>@github.com/Clemzy-alt/sin-000-healthsafe.git
+  git push origin main
+
+Or temporarily use a token with HTTPS:
+  git remote set-url origin https://ghp_xxx@github.com/Clemzy-alt/sin-000-healthsafe.git
+  git push origin main
+
+5. Verify after push
+   git fetch origin && git status -sb
