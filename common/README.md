@@ -53,12 +53,18 @@ from their own directories at the project root).
 docker compose ps          # confirm the broker container is healthy
 ```
 
-Once the TODOs below are implemented, verify end-to-end by publishing a message from
-`staffing-service` and confirming the consumer(s) receive it — e.g. via logs, or by
-watching the topic in the web console.
+Then compute a schedule (`GET http://localhost:7033/schedule/{wardId}`) and
+confirm the consumer receives it — via the `staffing-service` and
+`ward-service` logs, `GET http://localhost:7031/staffing-events`, or the
+web console.
 
-## TODO
+## Status
 
-- Add `activemq-client` publish logic to `staffing-service` on its stage/state-change endpoint.
-- Add `activemq-client` subscriber logic to consumer service(s) above, replacing any
-  direct synchronous calls to `staffing-service`.
+Both wiring steps are done:
+
+- `staffing-service` publishes to the topic on every schedule computation
+  (`co.wethinkcode.healthsafe.mq.TopicPublisher`, reached from
+  `GET /schedule/{wardId}`).
+- `ward-service` subscribes and stores what it receives
+  (`co.wethinkcode.healthsafe.mq.MqManager`), readable via
+  `GET /staffing-events` — no synchronous calls back to `staffing-service`.

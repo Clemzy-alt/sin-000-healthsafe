@@ -28,8 +28,10 @@ cleanup through synchronous REST calls to asynchronous MQ decoupling and alertin
 Plus [`common/`](common) (no port) — the shared ActiveMQ broker and MQ config notes
 for `staffing-events-topic`: Staffing updates are broadcast as Events via the broker to decouple the frontend from the Staffing Service.
 
-**Status:** scaffold only — build files, Javalin bootstrap, and TODOs are in place; no
-business logic has been implemented yet.
+**Status:** stages 1-4 implemented. Ingestion cleans and serves the legacy CSV,
+the three REST services call each other per the contracts below, staffing
+broadcasts on `staffing-events-topic`, and `equipment-alert-service` consumes
+`equipment-failure-queue` with guaranteed delivery.
 
 ## Your task
 
@@ -147,8 +149,15 @@ cd equipment-alert-service && mvn package && java -jar target/equipment-alert-se
 
 ## Test
 
-No automated tests exist yet (this is a scaffold). Each running service exposes
-`/health`, so sanity-check manually:
+Unit tests exist for the data cleaning (`ingestion-service`), the scheduling
+rules (`staffing-service`), and the status range check
+(`alert-level-service`). Run one module's suite with:
+
+```
+cd staffing-service && mvn test
+```
+
+Each running service also exposes `/health`, so sanity-check manually:
 
 ```
 curl http://localhost:7030/health   # -> OK
