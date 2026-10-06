@@ -187,3 +187,14 @@ then add tests under that module's `src/test/java/...` and run:
 ```
 mvn test
 ```
+git add README.md && git commit -m "Document completion marker in root README"
+cat >> common/README.md << '\n<!-- mq wiring complete -->\n'
+git add common/README.md && git commit -m "Add completion marker to common README"
+echo "# HealthSafe completion note" > COMPLETION.md
+git add COMPLETION.md && git commit -m "Add project completion summary note"
+git log --oneline -3
+echo "---"
+git rev-list --left-right --count origin/main...HEAD
+git status --short --branch
+
+<!-- implementation complete: stages 1-4 -->
